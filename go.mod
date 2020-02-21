@@ -2,6 +2,10 @@ module github.com/liftbridge-io/go-liftbridge
 
 go 1.13
 
+replace github.com/liftbridge-io/liftbridge-api => ../liftbridge-api
+
+replace github.com/liftbridge-io/liftbridge => ../liftbridge
+
 require (
 	github.com/armon/go-metrics v0.3.0 // indirect
 	github.com/hako/durafmt v0.0.0-20191009132224-3f39dc1ed9f4 // indirect
