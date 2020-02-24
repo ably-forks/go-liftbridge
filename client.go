@@ -69,6 +69,9 @@ type StreamOptions struct {
 	// this will behave as a stream with a single partition. If this is not
 	// set, it defaults to 1.
 	Partitions int32
+
+	// TODO
+	AutoDisableDuration uint64
 }
 
 // StreamOption is a function on the StreamOptions for a stream. These are used
@@ -103,6 +106,14 @@ func ReplicationFactor(replicationFactor int32) StreamOption {
 func MaxReplication() StreamOption {
 	return func(o *StreamOptions) error {
 		o.ReplicationFactor = MaxReplicationFactor
+		return nil
+	}
+}
+
+// TODO
+func AutoDisableDuration(autoDisableDuration uint64) StreamOption {
+	return func(o *StreamOptions) error {
+		o.AutoDisableDuration = autoDisableDuration
 		return nil
 	}
 }
@@ -367,11 +378,12 @@ func (c *client) CreateStream(ctx context.Context, subject, name string, options
 	}
 
 	req := &proto.CreateStreamRequest{
-		Subject:           subject,
-		Name:              name,
-		ReplicationFactor: opts.ReplicationFactor,
-		Group:             opts.Group,
-		Partitions:        opts.Partitions,
+		Subject:             subject,
+		Name:                name,
+		ReplicationFactor:   opts.ReplicationFactor,
+		Group:               opts.Group,
+		Partitions:          opts.Partitions,
+		AutoDisableDuration: opts.AutoDisableDuration,
 	}
 	err := c.doResilientRPC(func(client proto.APIClient) error {
 		_, err := client.CreateStream(ctx, req)
