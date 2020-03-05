@@ -2,6 +2,9 @@ module github.com/liftbridge-io/go-liftbridge
 
 go 1.13
 
+replace github.com/liftbridge-io/liftbridge-api => ../liftbridge-api
+replace github.com/liftbridge-io/liftbridge => ../liftbridge
+
 require (
 	github.com/golang/protobuf v1.3.5
 	github.com/liftbridge-io/liftbridge v1.0.0-beta.0.20200315000533-62544c84977c
